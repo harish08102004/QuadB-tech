@@ -11,11 +11,17 @@ import {
 } from "@mui/material";
 
 const TaskList = () => {
+  // Redux dispatch function
   const dispatch = useDispatch();
+  // State to store selected task IDs
   const [selectedTasks, setSelectedTasks] = useState([]);
+  // State to store completed task IDs
   const [completedTasks, setCompletedTasks] = useState([]);
+
+  // Retrieve tasks from local storage or initialize empty array
   const tasksFromLocalStorage = JSON.parse(localStorage.getItem("tasks"));
   const initialTasks = tasksFromLocalStorage ? tasksFromLocalStorage : [];
+  // Select tasks from Redux store or use initial tasks from local storage
   const tasks = useSelector((state) => state.tasks || initialTasks);
 
   useEffect(() => {
@@ -28,6 +34,7 @@ const TaskList = () => {
     }
   }, [tasksFromLocalStorage]);
 
+  // Event handler to delete selected tasks
   const handleDelete = () => {
     selectedTasks.forEach((taskId) => {
       dispatch(deleteTask(taskId));
@@ -35,6 +42,7 @@ const TaskList = () => {
     setSelectedTasks([]);
   };
 
+  // Event handler to toggle selection of a task
   const handleCheckboxChange = (taskId) => {
     if (selectedTasks.includes(taskId)) {
       setSelectedTasks(selectedTasks.filter((id) => id !== taskId));
@@ -43,6 +51,7 @@ const TaskList = () => {
     }
   };
 
+  // Event handler to toggle completion of a task
   const handleToggleCompleted = (taskId) => {
     dispatch(toggleTaskCompleted(taskId));
     if (completedTasks.includes(taskId)) {
@@ -54,6 +63,7 @@ const TaskList = () => {
 
   return (
     <Box>
+      {/* Buttons for marking selected tasks as completed and deleting selected tasks */}
       <Box display="flex" justifyContent="space-between" marginBottom="10px">
         <Button
           variant="contained"
@@ -71,21 +81,24 @@ const TaskList = () => {
           Delete Selected
         </Button>
       </Box>
+      {/* List of tasks */}
       <List>
         {tasks.map((task) => (
           <ListItem
             key={task.id}
             sx={{
               backgroundColor: completedTasks.includes(task.id)
-                ? "#b9f6ca"
-                : "inherit",
+                ? "#b9f6ca" // Green background for completed tasks
+                : "inherit", // Use default background for incomplete tasks
             }}
           >
+            {/* Checkbox for selecting a task */}
             <Box display="flex" alignItems="center">
               <Checkbox
                 checked={selectedTasks.includes(task.id)}
                 onChange={() => handleCheckboxChange(task.id)}
               />
+              {/* Task text */}
               <ListItemText primary={task.text} />
             </Box>
           </ListItem>

@@ -6,9 +6,9 @@ const Layout = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#f3d940", // Set background color
-        minHeight: "96vh", // Set minimum height to cover the viewport
-        paddingTop: "10px", // Add some top padding
+        backgroundColor: "#f3d940", 
+        minHeight: "96vh",
+        paddingTop: "10px", 
       }}
     >
       <Container maxWidth="md">
@@ -16,7 +16,7 @@ const Layout = () => {
           variant="h3"
           align="center"
           gutterBottom
-          sx={{ color: "#3f51b5", marginTop: "40px" }} // Style the heading
+          sx={{ color: "#3f51b5", marginTop: "40px" }} 
         >
           QuadB Tech Todo App
         </Typography>
